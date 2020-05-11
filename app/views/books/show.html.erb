@@ -1,0 +1,52 @@
+<% if flash[:notice] %>
+    <div class="flash">
+        <%= flash[:notice] %>
+    </div>
+<% end %>
+<div class="row">
+	<%= render 'books/list', user: @user, book: @book %>
+	<div class="col-xs-9">
+		<h2>Book detail</h2>
+		<table class="table table-hover table-inverse">
+			<tbody>
+					<tr>
+						<% if @user == current_user %>
+							<td>
+								<%= link_to user_path(@book.user) do %>
+									<%= attachment_image_tag @book.user, :profile_image, size: "40x40" , fallback: "no_image.jpg" %>
+									<br>
+									<%= @user.name %>
+								<% end %>
+							</td>
+							<td>
+								<%= link_to book_path(@book.id) do %>
+									<%= @book.title %>
+								<% end %>
+							</td>
+							<td><%= @book.body %></td>
+							<td>
+								<%= link_to "Edit", edit_book_path(@book.id), class: "btn-sm btn-success" %>
+							</td>
+							<td>
+								<%= link_to "Destroy", book_path(@book.id), class: "btn-sm btn-danger", method: :delete, "data-confirm" => "本当に消しますか?" %>
+							</td>
+						<% else %>
+							<td>
+								<%= link_to user_path(@book.user) do %>
+									<%= attachment_image_tag @book.user, :profile_image, size: "40x40" , fallback: "no_image.jpg", class: "img-responsive pull-left profile-thumb" %>
+									<br>
+									<%= @user.name %>
+								<% end %>
+							</td>
+							<td>
+								<%= link_to book_path(@book.id) do %>
+									<%= @book.title %>
+								<% end %>
+							</td>
+							<td><%= @book.body %></td>
+						<% end %>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
